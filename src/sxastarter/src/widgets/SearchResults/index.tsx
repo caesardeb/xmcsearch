@@ -1,5 +1,9 @@
 import { ArrowLeftIcon, ArrowRightIcon, CheckIcon } from '@radix-ui/react-icons';
-import type { SearchResultsInitialState, SearchResultsStoreState } from '@sitecore-search/react';
+import type {
+  FacetPayloadType,
+  SearchResultsInitialState,
+  SearchResultsStoreState,
+} from '@sitecore-search/react';
 import {
   WidgetDataType,
   useSearchResults,
@@ -7,7 +11,7 @@ import {
   widget,
 } from '@sitecore-search/react';
 import { Pagination, Presence, Select, SortSelect } from '@sitecore-search/ui';
-
+import { SearchResultsStoreSelectedFacet } from '@sitecore-search/widgets';
 import {
   AccordionFacetsStyled,
   ArticleCardStyled,
@@ -54,7 +58,9 @@ const buildRangeLabel = (min: number | undefined, max: number | undefined): stri
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const buildFacetLabel = (selectedFacet: any) => {
+const buildFacetLabel = (
+  selectedFacet: SearchResultsStoreSelectedFacet & { type: FacetPayloadType }
+) => {
   if ('min' in selectedFacet || 'max' in selectedFacet) {
     return `${selectedFacet.facetLabel}: ${buildRangeLabel(selectedFacet.min, selectedFacet.max)}`;
   }
@@ -91,7 +97,16 @@ export const SearchResultsComponent = ({
     },
   } = useSearchResults<ArticleModel, InitialState>({
     query: (query) => {
-      query.getRequest().setSources(['969172']);
+      query
+        .getRequest()
+        .setSources(['969172'])
+        .setSearchFacetAll(false)
+        .setSearchFacetTypes([
+          {
+            name: 'type',
+          },
+        ])
+        .getSearchFacet();
     },
     state: {
       sortType: defaultSortType,
@@ -126,7 +141,7 @@ export const SearchResultsComponent = ({
       <SearchResultsLayout.MainArea>
         {isFetching && (
           <LoaderContainer>
-            <Presence present={true}>
+            <Presence key={defaultKeyphrase} present={true}>
               <LoaderAnimation
                 aria-busy={true}
                 aria-hidden={false}
