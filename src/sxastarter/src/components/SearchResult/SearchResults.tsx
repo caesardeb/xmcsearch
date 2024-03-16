@@ -1,8 +1,14 @@
 import React from 'react';
 import SearchResultsWidget from 'src/widgets/SearchResults';
 import { WidgetsProvider } from '@sitecore-search/react';
+import { useSearchParams } from 'next/navigation';
 
-const SearchResults = () => {
+const SearchResults = (): JSX.Element => {
+  const useKeyphrase = (): string => {
+    const searchParams = useSearchParams();
+    const searchQuery = searchParams.get('q') || '';
+    return searchQuery;
+  };
   return (
     <section className="bg-[#F4F6F5]">
       <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
@@ -14,7 +20,11 @@ const SearchResults = () => {
             env="prodEu"
             publicSuffix={true}
           >
-            <SearchResultsWidget rfkId="rfkid_24" />
+            <SearchResultsWidget
+              rfkId="rfkid_24"
+              defaultKeyphrase={useKeyphrase()}
+              key={`${useKeyphrase()}-search`}
+            />
           </WidgetsProvider>
         </div>
       </div>
