@@ -235,7 +235,7 @@ export const ProductResultsComponent = ({
                   <ArticleCardStyled.Root key={a.id} article={a as ArticleModel}>
                     <ArticleCardStyled.Title>
                       <ArticleCardStyled.Link
-                        href="#"
+                        href={a?.url}
                         onClick={(e) => {
                           e.preventDefault();
                           onItemClick({ id: a.id, index, sourceId: a.source_id });
@@ -246,7 +246,7 @@ export const ProductResultsComponent = ({
                     </ArticleCardStyled.Title>
                     <ArticleCardStyled.Content>
                       <ArticleCardStyled.Image />
-                      {a.title}
+                      {a.description}
                     </ArticleCardStyled.Content>
                   </ArticleCardStyled.Root>
                 ))}
