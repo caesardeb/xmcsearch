@@ -79,4 +79,3 @@ export const Default = (props: FooterProps): JSX.Element => {
 
   return <FooterDefaultComponent {...props} />;
 };
-
