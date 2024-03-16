@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { GraphQLRequestClient } from '@sitecore-jss/sitecore-jss-nextjs/graphql';
 import config from 'temp/config';
 import { siteResolver } from 'lib/site-resolver';
-import { GraphQLClient, SearchQueryService } from 'lib/search-service';
 
 export type RawStartItemGqlData = {
   layout: {
