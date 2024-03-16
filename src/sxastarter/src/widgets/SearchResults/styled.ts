@@ -37,7 +37,7 @@ const GenericSelectTriggerStyled = styled(Select.Trigger)`
 `;
 
 const contentSelectStyle = `
-  background-color: ${theme.vars.palette.primary.contrastText};
+  background-color: #fff;
   position: relative;
   overflow: hidden;
   color: ${theme.vars.palette.primary.main};
@@ -45,6 +45,7 @@ const contentSelectStyle = `
   position: absolute;
   top: 30px;
   z-index: 100;
+  padding: 10px;
   &:focus-within {
     border-color: ${theme.vars.palette.primary.dark};
   }
