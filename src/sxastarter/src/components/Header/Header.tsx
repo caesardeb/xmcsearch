@@ -61,7 +61,11 @@ export const Default = (props: HeaderProps): JSX.Element => {
                   </div>
                 ))}
               </nav>
-              <form id="search" action="{{ '/search' | url }}" className="order-last sm:order-none flex-grow items-center justify-end hidden sm:block mt-6 sm:mt-0">
+              <form
+                id="search"
+                action="{{ '/search' | url }}"
+                className="order-last sm:order-none flex-grow items-center justify-end hidden sm:block mt-6 sm:mt-0"
+              >
                 {/* <label className="visually-hidden" htmlFor="header-searchbox">Search here ...</label> */}
                 <input type="text" id="header-searchbox" name="q" placeholder="Search here ..." className="w-full sm:max-w-lg bg-slate-200 border border-transparent float-right focus:bg-white focus:border-slate-300 focus:outline-none h-14 p-4 placeholder-slate-500 rounded text-slate-700 text-xl"/>
             </form>
