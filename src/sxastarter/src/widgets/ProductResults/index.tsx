@@ -1,5 +1,10 @@
 import { ArrowLeftIcon, ArrowRightIcon, CheckIcon } from '@radix-ui/react-icons';
-import type { SearchResultsInitialState, SearchResultsStoreState } from '@sitecore-search/react';
+import { RichText } from '@sitecore-jss/sitecore-jss-nextjs';
+import type {
+  SearchResultsInitialState,
+  SearchResultsStoreState,
+  FacetPayloadType,
+} from '@sitecore-search/react';
 import {
   FilterEqual,
   WidgetDataType,
@@ -8,7 +13,7 @@ import {
   widget,
 } from '@sitecore-search/react';
 import { Pagination, Presence, Select, SortSelect } from '@sitecore-search/ui';
-
+import { SearchResultsStoreSelectedFacet } from '@sitecore-search/widgets';
 import {
   AccordionFacetsStyled,
   ArticleCardStyled,
@@ -55,7 +60,9 @@ const buildRangeLabel = (min: number | undefined, max: number | undefined): stri
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const buildFacetLabel = (selectedFacet: any) => {
+const buildFacetLabel = (
+  selectedFacet: SearchResultsStoreSelectedFacet & { type: FacetPayloadType }
+) => {
   if ('min' in selectedFacet || 'max' in selectedFacet) {
     return `${selectedFacet.facetLabel}: ${buildRangeLabel(selectedFacet.min, selectedFacet.max)}`;
   }
@@ -95,7 +102,14 @@ export const ProductResultsComponent = ({
       query
         .getRequest()
         .setSources(['969172'])
-        .setSearchFilter(new FilterEqual('type', 'Products'));
+        .setSearchFilter(new FilterEqual('type', 'Products'))
+        .setSearchFacetAll(false)
+        .setSearchFacetTypes([
+          {
+            name: 'category',
+          },
+        ])
+        .getSearchFacet();
     },
     state: {
       sortType: defaultSortType,
@@ -197,9 +211,9 @@ export const ProductResultsComponent = ({
                 ))}
               </AccordionFacetsStyled.Root>
             </SearchResultsLayout.LeftArea>
-            <SearchResultsLayout.RightArea>
+            <SearchResultsLayout.RightArea className="product-list w-full ">
               {/* Sort Select */}
-              <SearchResultsLayout.RightTopArea>
+              <SearchResultsLayout.RightTopArea className="mb-10 dd-triger">
                 {totalItems > 0 && (
                   <QuerySummaryStyled>
                     Showing {itemsPerPage * (page - 1) + 1} -{' '}
@@ -229,23 +243,33 @@ export const ProductResultsComponent = ({
               </SearchResultsLayout.RightTopArea>
 
               {/* Results */}
-              <GridStyled>
+              <GridStyled className="grid grid-cols-2 gap-11 xs:grid-cols-1">
                 {articles.map((a, index) => (
-                  <ArticleCardStyled.Root key={a.id} article={a as ArticleModel}>
-                    <ArticleCardStyled.Title>
+                  <ArticleCardStyled.Root
+                    className="product my-10 my-8 height-500 border-custom p-3.5"
+                    key={a.id}
+                    article={a as ArticleModel}
+                  >
+                    <ArticleCardStyled.Title className="mb-8 h-14">
                       <ArticleCardStyled.Link
                         href={a?.url}
                         onClick={(e) => {
                           e.preventDefault();
                           onItemClick({ id: a.id, index, sourceId: a.source_id });
                         }}
+                        className="text-4xl"
                       >
                         {a.title || a.name}
                       </ArticleCardStyled.Link>
                     </ArticleCardStyled.Title>
-                    <ArticleCardStyled.Content>
-                      <ArticleCardStyled.Image />
-                      {a.description}
+                    <ArticleCardStyled.Content className="w-full product-card flex flex-column h-400 overflow-hidden">
+                      <div className="w-full">
+                        <ArticleCardStyled.Image className="w-full" />
+                      </div>
+                      <div className="w-full">
+                        <RichText field={{ value: a?.description }} />
+                        {/* {a.description} */}
+                      </div>
                     </ArticleCardStyled.Content>
                   </ArticleCardStyled.Root>
                 ))}

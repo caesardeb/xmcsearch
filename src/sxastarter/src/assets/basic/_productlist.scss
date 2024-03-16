@@ -1,0 +1,52 @@
+.product{
+    .text-4xl {
+        font-size: 2.25rem !important;
+        line-height: 2.5rem;
+    }
+    .my-10 {
+        margin-top: 2.5rem !important;
+        margin-bottom: 2.5rem !important;
+    }
+    .product-card{
+        .w-full{
+            width: 100% !important;
+        }
+        &.h-400{
+            height: 400px !important;
+        }
+    }
+    .mb-8{
+        margin-bottom: 32px !important;
+    }
+    .my-8{
+        margin-top: 2rem !important;
+        margin-bottom: 2rem !important;
+    }
+    &.height-500{
+        height: 500px !important;
+    }
+    &.border-custom{
+        border: 2px solid #545454 !important;
+    }
+    &.p-3\.5 {
+        padding: 0.875rem !important;
+    }
+}
+.product-list{
+    .dd-triger{
+        button{
+            + div{
+                background-color: #fff !important;
+                height:  120px !important;
+                // height: auto !important;
+                // top: 0px !important;
+                top: 25% !important;
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+                // height: 100px !important;
+                // margin: 0px !important;
+                // display: block !important;
+            }
+        }
+    }
+}
