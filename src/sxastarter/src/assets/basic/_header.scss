@@ -4,7 +4,7 @@
 
 .prod-mode {
   #header {
-    display: flex;
+  
 
     @include respond-to(mobile-large) {
       padding-bottom: 0;
