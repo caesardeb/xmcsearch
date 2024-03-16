@@ -37,7 +37,7 @@ export const Default = (props: HeaderProps): JSX.Element => {
       //   <div className={`component Header ${props.params.styles}`} id={id ? id : undefined}>
       <div className={`p-0 component Header ${props?.params?.styles}`}>
         <div className="component-content">
-          <div className="bg-white w-full px-6 py-5">
+          <div className="bg-[#545454] w-full px-6 py-5">
             <div className="max-w-screen-xl mx-auto flex items-center flex-wrap justify-between">
               <div className="sm:mr-8">
                 <JssLink field={props.fields.logoLink}>
@@ -50,12 +50,12 @@ export const Default = (props: HeaderProps): JSX.Element => {
               </div>
               <nav
                 id="menu"
-                className="order-last md:order-none items-center flex-grow w-full md:w-auto md:flex hidden mt-2 md:mt-0"
+                className="order-last md:order-none items-center flex-grow flex-row-reverse w-full md:w-auto md:flex hidden mt-2 md:mt-0 ml-7"
               >
                 {props.fields.generalLinks.map((items, index) => (
                   <div key={index}>
                     <JssLink
-                      className="block mt-4 md:inline-block md:mt-0 font-medium text-3xl text-slate-700 hover:text-cyan-600 text- mr-4"
+                      className="block mt-4 md:inline-block md:mt-0 font-medium text-3xl text-cyan-500 hover:text-cyan-600 mr-10"
                       field={items.fields.link}
                     />
                   </div>
