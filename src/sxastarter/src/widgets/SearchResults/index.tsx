@@ -53,6 +53,7 @@ const buildRangeLabel = (min: number | undefined, max: number | undefined): stri
     : `$${min} - $${max}`;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const buildFacetLabel = (selectedFacet: any) => {
   if ('min' in selectedFacet || 'max' in selectedFacet) {
     return `${selectedFacet.facetLabel}: ${buildRangeLabel(selectedFacet.min, selectedFacet.max)}`;
@@ -164,6 +165,7 @@ export const SearchResultsComponent = ({
               </FiltersStyled.SelectedFiltersList>
               <AccordionFacetsStyled.Root
                 defaultFacetTypesExpandedList={[]}
+                // eslint-disable-next-line @typescript-eslint/no-empty-function
                 onFacetTypesExpandedListChange={() => {}}
                 onFacetValueClick={onFacetClick}
               >
