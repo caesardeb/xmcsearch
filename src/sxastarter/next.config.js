@@ -27,6 +27,12 @@ const nextConfig = {
     defaultLocale: jssConfig.defaultLanguage,
   },
 
+  // Allow Domain
+  images: {
+    domains: ['edge.sitecorecloud.io', 'img.youtube.com'],
+    dangerouslyAllowSVG: true,
+  },
+
   // Enable React Strict Mode
   reactStrictMode: true,
 
