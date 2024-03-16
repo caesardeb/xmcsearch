@@ -17,31 +17,59 @@ export type RawGqlData = {
     results: [
       {
         url: { url: string };
-        title: {
+        id: string;
+        name: string;
+        searchTitle: {
           jsonValue: {
             value: string;
           };
         };
-        id: string;
-        name: string;
+        searchDescription: {
+          jsonValue: {
+            value: string;
+          };
+        };
+        searchImage: {
+          jsonValue: {
+            value: string;
+          };
+        };
+        searchPageType: {
+          jsonValue: {
+            value: string;
+          };
+        };
+        category: {
+          jsonValue: {
+            value: string;
+          };
+        };
+        subCategory: {
+          jsonValue: {
+            value: string;
+          };
+        };
+        hidefromSearch: {
+          jsonValue: {
+            value: boolean;
+          };
+        };
       }
     ];
   };
 };
 
 type ProductData = {
+  url: string;
   id: string;
   name?: string;
-  gtin?: string;
-  title: string;
-  brand?: string;
-  variant?: string;
-  image_link?: string;
-  product_url?: string;
-  product_line?: string;
-  description?: string;
+  searchTitle: string;
+  searchDescription?: string;
+  searchImage?: string;
+  searchPageType?: string;
   category?: string;
   subCategory?: string;
+  hidefromSearch?: boolean;
 };
 
 const mikMakProductFeed = async (_req: NextApiRequest, res: NextApiResponse): Promise<void> => {
@@ -53,14 +81,11 @@ const mikMakProductFeed = async (_req: NextApiRequest, res: NextApiResponse): Pr
   const hostName = _req.headers['host']?.split(':')[0] || 'localhost';
   const site = siteResolver.getByHost(hostName);
   const lang = (_req.query['lang'] as string) || site?.language;
-  console.log('site:', site);
-  console.log('lang:', lang);
   const startItemLookup = await graphQLClient.request<RawStartItemGqlData>(startItemQuery, {
     language: lang,
     site: site?.name,
   });
   const startItem = startItemLookup.layout?.item?.id;
-  console.log('startItem:', startItem);
 
   //const searchService = new SearchQueryService<RawGqlData>(graphQLClient as GraphQLClient);
   const results = await graphQLClient.request<RawGqlData>(query, {
@@ -69,17 +94,21 @@ const mikMakProductFeed = async (_req: NextApiRequest, res: NextApiResponse): Pr
     templates: '908FAFF629034AE482125587A634714F',
   });
 
-  console.log('Search feed: ', results?.pageOne?.results);
-
   const productList: ProductData[] = [];
 
   results?.pageOne?.results?.forEach((data) => {
     if (data?.id != undefined) {
       const product: ProductData = {
         id: data?.id,
-        title: data?.title?.jsonValue?.value,
-        product_url: data?.url?.url,
+        searchTitle: data?.searchTitle?.jsonValue?.value,
+        searchDescription: data?.searchDescription?.jsonValue?.value,
+        searchImage: data?.searchImage?.jsonValue?.value,
+        searchPageType: data?.searchPageType?.jsonValue?.value,
+        category: data?.category?.jsonValue?.value,
+        subCategory: data?.subCategory?.jsonValue?.value,
+        hidefromSearch: data?.hidefromSearch?.jsonValue?.value,
         name: data?.name,
+        url: data?.url?.url,
       };
       productList.push(product);
     }
@@ -111,15 +140,32 @@ const query = /* GraphQL */ `
       }
       first: 300
     ) {
-      total
       results {
         url {
           url
+          path
         }
         id
         name
-
-        title: field(name: "Title") {
+        hidefromSearch: field(name: "hidefromSearch") {
+          jsonValue
+        }
+        searchTitle: field(name: "searchTitle") {
+          jsonValue
+        }
+        searchDescription: field(name: "searchDescription") {
+          jsonValue
+        }
+        searchImage: field(name: "searchImage") {
+          jsonValue
+        }
+        searchPageType: field(name: "searchPageType") {
+          jsonValue
+        }
+        category: field(name: "category") {
+          jsonValue
+        }
+        subCategory: field(name: "subCategory") {
           jsonValue
         }
       }
