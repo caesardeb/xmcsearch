@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Image as JssImage,
   Link as JssLink,
@@ -32,12 +32,15 @@ const HeaderDefaultComponent = (props: HeaderProps): JSX.Element => (
 
 export const Default = (props: HeaderProps): JSX.Element => {
   // const id = props.params.RenderingIdentifier;
+    const [isToggleClicked, setIsToggleClicked] = useState(false);
+    
+
   if (props.fields) {
     return (
       //   <div className={`component Header ${props.params.styles}`} id={id ? id : undefined}>
       <div className={`p-0 component Header ${props?.params?.styles}`}>
         <div className="component-content">
-          <div className="bg-white w-full px-6 py-5">
+        <div className="bg-white w-full px-6 py-5 border-b-2 transition-all transform ease-in-out duration-500">
             <div className="max-w-screen-xl mx-auto flex items-center flex-wrap justify-between">
               <div className="sm:mr-8">
                 <JssLink field={props.fields.logoLink}>
@@ -50,7 +53,7 @@ export const Default = (props: HeaderProps): JSX.Element => {
               </div>
               <nav
                 id="menu"
-                className="order-last md:order-none items-center flex-grow w-full md:w-auto md:flex hidden mt-2 md:mt-0"
+                className={`order-last md:order-none items-center flex-grow w-full md:w-auto md:flex mt-6 md:mt-0 ${isToggleClicked ? '' : 'hidden'}`}
               >
                 {props.fields.generalLinks.map((items, index) => (
                   <div key={index}>
@@ -64,7 +67,7 @@ export const Default = (props: HeaderProps): JSX.Element => {
               <form
                 id="search"
                 action="{{ '/search' | url }}"
-                className="order-last sm:order-none flex-grow items-center justify-end hidden sm:block mt-6 sm:mt-0"
+                className={`order-last sm:order-none flex-grow items-center justify-end sm:block mt-6 sm:mt-0 ${isToggleClicked ? '' : 'hidden'}`}
               >
                 {/* <label className="visually-hidden" htmlFor="header-searchbox">Search here ...</label> */}
                 <input
@@ -78,6 +81,7 @@ export const Default = (props: HeaderProps): JSX.Element => {
               <div
                 id="menu-toggle"
                 className="flex items-center md:hidden text-slate-700 hover:text-teal-600 cursor-pointer sm:ml-6"
+                onClick={() => setIsToggleClicked(!isToggleClicked)}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -86,9 +90,9 @@ export const Default = (props: HeaderProps): JSX.Element => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   className="feather feather-menu"
                 >
                   <line x1="3" y1="12" x2="21" y2="12"></line>
