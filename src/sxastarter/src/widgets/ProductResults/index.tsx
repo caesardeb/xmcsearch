@@ -121,7 +121,6 @@ export const ProductResultsComponent = ({
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const selectedSortIndex = sortChoices.findIndex((s) => s.name === sortType);
   const selectedFacetsFromApi = useSearchResultsSelectedFilters();
-  console.log('articles: ', articles);
   if (isLoading) {
     return (
       <LoaderContainer>
