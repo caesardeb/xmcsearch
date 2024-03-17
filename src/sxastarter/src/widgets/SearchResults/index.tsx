@@ -14,7 +14,6 @@ import { Pagination, Presence, Select, SortSelect } from '@sitecore-search/ui';
 import { SearchResultsStoreSelectedFacet } from '@sitecore-search/widgets';
 import {
   AccordionFacetsStyled,
-  ArticleCardStyled,
   FiltersStyled,
   GridStyled,
   LoaderAnimation,
@@ -155,7 +154,7 @@ export const SearchResultsComponent = ({
         )}
         {totalItems > 0 && (
           <>
-            {/* <SearchResultsLayout.LeftArea>
+            <SearchResultsLayout.LeftArea>
               {selectedFacetsFromApi.length > 0 && (
                 <FiltersStyled.ClearFilters onClick={onClearFilters}>
                   Clear Filters
@@ -207,7 +206,7 @@ export const SearchResultsComponent = ({
                   </AccordionFacetsStyled.Facet>
                 ))}
               </AccordionFacetsStyled.Root>
-            </SearchResultsLayout.LeftArea> */}
+            </SearchResultsLayout.LeftArea>
             <SearchResultsLayout.RightArea>
               {/* Sort Select */}
               <SearchResultsLayout.RightTopArea>
@@ -240,47 +239,48 @@ export const SearchResultsComponent = ({
               </SearchResultsLayout.RightTopArea>
 
               {/* Results */}
-              {/* <GridStyled>
-                {articles.map((a, index) => (
-                  <ArticleCardStyled.Root key={a.id} article={a as ArticleModel}>
-                    <ArticleCardStyled.Title>
-                      <ArticleCardStyled.Link
-                        href={a.url}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          onItemClick({ id: a.id, index, sourceId: a.source_id });
-                        }}
-                      >
-                        {a.title || a.name}
-                      </ArticleCardStyled.Link>
-                    </ArticleCardStyled.Title>
-                    <ArticleCardStyled.Content>
-                      <ArticleCardStyled.Image />
-                      {a.description}
-                    </ArticleCardStyled.Content>
-                  </ArticleCardStyled.Root>
-                ))}
-              </GridStyled> */}
-              <div className="flex flex-wrap -mx-4">
-              {articles.map((a, index) => (
-                <div className="w-full sm:w-1/2 md:w-1/3 self-stretch p-4" key={a.id}>
-                    <div className="rounded shadow-md h-full">
+              <GridStyled>
+                <div className="flex flex-wrap -mx-4">
+                  {articles.map((a, index) => (
+                    <div className="w-full sm:w-1/2 md:w-1/3 self-stretch p-4" key={a.id}>
+                      <div className="rounded shadow-md h-full">
                         <a href={a.url}>
-                            <img className="w-full m-0 rounded-t lazy" src={a.image_url} width="960" height="500" alt={a.title} />
+                          <img
+                            className="w-full m-0 rounded-t lazy"
+                            src={a.image_url}
+                            width="960"
+                            height="500"
+                            alt={a.title}
+                          />
                         </a>
                         <div className="px-6 py-5">
-                            {a.title || a.name ? <div className="font-semibold text-4xl mb-5">
-                                <a className="text-slate-900 hover:text-slate-700" href={a.url} onClick={(e) => {
-                                e.preventDefault();
-                                onItemClick({ id: a.id, index, sourceId: a.source_id });
-                                }}>{a.title || a.name}</a>
-                            </div> : null}
-                            {a.description ? <div className="text-slate-800 text-xl"  dangerouslySetInnerHTML={{ __html: a.description }} /> : null}
+                          {a.title || a.name ? (
+                            <div className="font-semibold text-4xl mb-5">
+                              <a
+                                className="text-slate-900 hover:text-slate-700"
+                                href={a.url}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  onItemClick({ id: a.id, index, sourceId: a.source_id });
+                                }}
+                              >
+                                {a.title || a.name}
+                              </a>
+                            </div>
+                          ) : null}
+                          {a.description ? (
+                            <div
+                              className="text-slate-800 text-xl"
+                              dangerouslySetInnerHTML={{ __html: a.description }}
+                            />
+                          ) : null}
                         </div>
+                      </div>
                     </div>
+                  ))}
                 </div>
-              ))}
-              </div>
+              </GridStyled>
+
               <PageControlsStyled>
                 <div>
                   <label>Results Per Page</label>

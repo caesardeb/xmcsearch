@@ -11,18 +11,18 @@ const SearchResults = (): JSX.Element => {
   };
   return (
     <section className="search-result max-w-screen-xl mx-auto py-24 px-6">
-        <WidgetsProvider
+      <WidgetsProvider
         apiKey="01-13ffbe51-d21f5f73795b1972dd1ebb5df7b2a92c54af842d"
         customerKey="94826063-106207387"
         env="prodEu"
         publicSuffix={true}
-        >
-            <SearchResultsWidget
-              rfkId="rfkid_24"
-              defaultKeyphrase={useKeyphrase()}
-              key={`${useKeyphrase()}-search`}
-            />
-        </WidgetsProvider>
+      >
+        <SearchResultsWidget
+          rfkId="rfkid_24"
+          defaultKeyphrase={useKeyphrase()}
+          key={`${useKeyphrase()}-search`}
+        />
+      </WidgetsProvider>
     </section>
   );
 };
